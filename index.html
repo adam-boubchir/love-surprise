@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffe7f0">
+<title>Une petite question d’amour 💗</title>
+<style>
+  :root{--pink:#ff78a8;--hot:#ed4e88;--ink:#713a52;--soft:#fff7fb}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;overflow:hidden;display:grid;place-items:center;font-family:"Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:radial-gradient(ellipse at 12% 12%,#fff 0 2px,transparent 4px),radial-gradient(ellipse at 80% 30%,#fff 0 2px,transparent 4px),linear-gradient(135deg,#ffe0ed,#fff7fb 48%,#ffd2e4);background-size:130px 130px,170px 170px,auto}
+  button{font:inherit;cursor:pointer;border:0}
+  .ambient,.ambient span{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+  .floaty{position:absolute;bottom:-60px;opacity:.55;animation:drift linear infinite}
+  @keyframes drift{to{transform:translate3d(25px,-115vh,0) rotate(35deg);opacity:0}}
+  .card{position:relative;z-index:2;width:min(94vw,540px);padding:28px 24px 30px;text-align:center;border:1px solid #fff;border-radius:32px;background:#ffffffd9;box-shadow:0 24px 75px #cf568626;backdrop-filter:blur(12px);animation:arrive .8s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes arrive{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+  .eyebrow{margin:0;color:#c16b8b;text-transform:uppercase;letter-spacing:.18em;font-size:.75rem}
+  h1{font-size:clamp(1.7rem,6vw,2.55rem);line-height:1.15;margin:10px 0 8px}
+  .subtitle{margin:0;color:#a06d82}
+  .bear-stage{height:245px;display:grid;place-items:center;position:relative;isolation:isolate}
+  .bear-svg{width:230px;height:238px;overflow:visible;filter:drop-shadow(0 10px 6px #b84e7820);transition:filter .3s;animation:softBob 2s ease-in-out infinite}
+  @keyframes softBob{0%,100%{transform:translateY(2px) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}
+  .bear-svg .body,.bear-svg .head,.bear-svg .arm,.bear-svg .leg,.bear-svg .ear,.bear-svg .muzzle{stroke:#8f5c52;stroke-width:3;stroke-linejoin:round}
+  .bear-svg .body,.bear-svg .head,.bear-svg .arm,.bear-svg .leg,.bear-svg .ear{fill:#c98b69}
+  .bear-svg .muzzle{fill:#f4d0b4}
+  .bear-svg .inner{fill:#e7b4a3;stroke:#8f5c52;stroke-width:2}
+  .bear-svg .eye{fill:#50343a;transition:opacity .2s}
+  .bear-svg .shine{fill:#fff}
+  .bear-svg .mouth{fill:none;stroke:#70424a;stroke-width:2.5;stroke-linecap:round}
+  .bear-svg .tear{fill:#74cfff;stroke:#329ed6;stroke-width:1.5;opacity:0;transform-origin:center;transition:opacity .15s}
+  .bear-svg .heart-held{fill:#ff4f89;stroke:#d92e6a;stroke-width:2;transform-origin:100px 113px;filter:drop-shadow(0 3px 2px #d92e6a35)}
+  .bear-svg .heart-glint{fill:#fff;stroke:none}
+  .bear-svg .ear{transform-box:fill-box;transform-origin:center;animation:earWiggle 2.8s ease-in-out infinite}
+  .bear-svg .ear:nth-of-type(2){animation-delay:.2s}
+  .bear-svg .eye{animation:blink 4.2s infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes blink{0%,44%,48%,100%{transform:scaleY(1)}46%{transform:scaleY(.12)}}
+  @keyframes earWiggle{0%,85%,100%{rotate:0deg}90%{rotate:-8deg}95%{rotate:7deg}}
+  .bear-svg .arm-left,.bear-svg .arm-right{animation:pawWiggle 2.4s ease-in-out infinite}
+  .bear-svg .arm-right{animation-delay:.15s}
+  @keyframes pawWiggle{0%,100%{translate:0 0}50%{translate:0 -2px}}
+  .bear-svg .brow{stroke:#70424a;stroke-width:3;stroke-linecap:round;opacity:0}
+  .bear-svg .arm-left,.bear-svg .arm-right{transform-box:fill-box;transform-origin:center;transition:transform .3s}
+  .bear-svg .floating-heart{opacity:0;transform-box:fill-box;transform-origin:center}
+  .bear-svg .blush{fill:#e9828f;opacity:.55}
+  /* Normal: the bear proudly holds a heart. */
+  .bear-svg .heart-held{animation:heartBeat 1.2s ease-in-out infinite}
+  @keyframes heartBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+  /* Cursor approaches No: tears appear and the bear cries. */
+  .bear-stage.cry .tear{opacity:1;animation:teardrop .65s ease-in infinite alternate}
+  .bear-stage.cry .brow{opacity:1}
+  .bear-stage.cry .happy-mouth{opacity:0}
+  .bear-stage.cry .sad-mouth{opacity:1}
+  .bear-stage.cry .heart-held{animation:heartWobble .65s ease-in-out infinite}
+  .bear-stage.cry .arm-left{transform:rotate(18deg) translateY(3px)}
+  .bear-stage.cry .arm-right{transform:rotate(-18deg) translateY(3px)}
+  @keyframes teardrop{from{transform:translateY(-1px)}to{transform:translateY(8px)}}
+  @keyframes heartWobble{0%,100%{transform:rotate(-5deg) scale(.92)}50%{transform:rotate(6deg) scale(.96)}}
+  /* Cursor approaches Yes: joyful bouncing, raised arms, heart stays in paws. */
+  .bear-stage.joy .bear-svg{animation:joyBounce .42s ease-in-out infinite alternate;filter:drop-shadow(0 14px 9px #ef619333)}
+  .bear-stage.joy .arm-left{transform:rotate(28deg) translateY(-5px)}
+  .bear-stage.joy .arm-right{transform:rotate(-28deg) translateY(-5px)}
+  .bear-stage.joy .heart-held{animation:heartBeat .5s ease-in-out infinite}
+  .bear-stage.joy .happy-mouth{stroke-width:3.4}
+  @keyframes joyBounce{from{transform:translateY(5px) rotate(-3deg)}to{transform:translateY(-12px) rotate(3deg)}}
+  .sparkle{position:absolute;font-size:24px;animation:twinkle .8s ease-in-out infinite alternate;pointer-events:none}
+  .bear-stage::before,.bear-stage::after{content:"💕";position:absolute;font-size:24px;opacity:0;pointer-events:none}
+  .bear-stage.joy::before{opacity:1;animation:miniHeart 1.1s ease-out infinite;left:calc(50% - 95px);top:55px}
+  .bear-stage.joy::after{content:"💗";opacity:1;animation:miniHeart 1.3s .35s ease-out infinite;right:calc(50% - 100px);top:75px}
+  @keyframes miniHeart{0%{transform:translateY(18px) scale(.5);opacity:0}30%{opacity:1}100%{transform:translateY(-24px) scale(1.15);opacity:0}}
+  .sparkle.a{top:30px;left:calc(50% - 118px)}.sparkle.b{top:58px;right:calc(50% - 125px);animation-delay:.35s}
+  @keyframes twinkle{from{transform:scale(.65) rotate(-12deg);opacity:.35}to{transform:scale(1.2) rotate(12deg);opacity:1}}
+  .buttons{height:72px;position:relative;display:flex;justify-content:center;align-items:center;gap:18px;margin-top:5px}
+  .btn{border-radius:999px;padding:14px 26px;font-size:1rem;font-weight:800;box-shadow:0 7px 20px #d95d8b22;transition:transform .18s,box-shadow .18s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px #d95d8b38}
+  #yes{min-width:126px;background:linear-gradient(135deg,#ff83ad,#ed4e88);color:#fff;position:relative;z-index:2}
+  #no{min-width:120px;position:relative;left:auto;top:auto;background:#fff;color:#a45d79;border:1px solid #f3c2d5;z-index:3;transition:left .12s ease-out,top .12s ease-out}
+  #no.running{position:absolute}
+  .hint{margin:16px 0 0;color:#b17d93;font-size:.84rem;min-height:1.2em}
+  .result{position:fixed;inset:0;z-index:10;display:none;place-items:center;overflow:hidden;text-align:center;background:radial-gradient(ellipse at 50% 25%,#fff 0%,#ffe7f1 38%,#ffbfd8 100%)}
+  .result.show{display:grid;animation:sceneIn .85s ease both}
+  @keyframes sceneIn{from{opacity:0;filter:blur(8px)}to{opacity:1;filter:blur(0)}}
+  .result::before,.result::after{content:"";position:absolute;width:70vmax;height:70vmax;border:1px solid #fff9;border-radius:50%;animation:ring 5s linear infinite}
+  .result::after{width:95vmax;height:95vmax;animation-delay:-2.5s}
+  @keyframes ring{from{transform:scale(.35);opacity:0}35%{opacity:.6}to{transform:scale(1.3);opacity:0}}
+  .result-content{position:relative;z-index:2;padding:20px;animation:grandEntrance 1s cubic-bezier(.16,1,.3,1) both}
+  @keyframes grandEntrance{from{transform:scale(.45) rotate(-9deg);opacity:0}to{transform:scale(1);opacity:1}}
+  .result h2{margin:0;color:#e84983;font-size:clamp(2.8rem,12vw,6.4rem);line-height:1;text-shadow:0 5px #fff,0 13px 38px #d94d8433}
+  .result .message{font-size:clamp(1rem,4vw,1.4rem);color:#9b456b;margin:15px 0}
+  .party-bear{width:clamp(210px,48vw,310px);height:auto;overflow:visible;filter:drop-shadow(0 16px 12px #c74c7a2b);animation:partyBounce .4s ease-in-out infinite alternate}
+  @keyframes partyBounce{from{transform:translateY(7px) rotate(-5deg)}to{transform:translateY(-18px) rotate(5deg)}}
+  .launched-heart{position:absolute;left:50%;top:40%;font-size:clamp(22px,5vw,44px);pointer-events:none;animation:launchHeart var(--dur,2.4s) cubic-bezier(.15,.65,.3,1) forwards;filter:drop-shadow(0 4px 5px #d84d8330)}
+  @keyframes launchHeart{0%{transform:translate(-50%,0) scale(.35) rotate(0deg);opacity:0}12%{opacity:1}100%{transform:translate(calc(-50% + var(--dx)),var(--dy)) scale(var(--scale,1.2)) rotate(var(--rot,25deg));opacity:0}}
+  .petal{position:absolute;top:-10vh;pointer-events:none;animation:fall var(--fall,4s) linear forwards}
+  @keyframes fall{to{transform:translateY(120vh) rotate(720deg);opacity:.1}}
+  .replay{margin-top:10px;background:#fff;color:#d84d83}
+  @media(max-width:430px){.card{padding:24px 14px 25px}.bear-stage{height:220px}.bear-svg{width:185px;height:205px}.buttons{gap:10px}.btn{padding:13px 21px}#no{min-width:108px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="ambient" id="ambient" aria-hidden="true"></div>
+<main class="card" id="card">
+  <p class="eyebrow">un petit secret 💌</p>
+  <h1>Dis-moi… tu m’aimes ? 🥺💗</h1>
+  <p class="subtitle">J’ai une question très importante pour toi…</p>
+  <div class="bear-stage" id="bearStage">
+    <span class="sparkle a">✨</span><span class="sparkle b">💖</span>
+    <svg class="bear-svg" viewBox="0 0 200 220" role="img" aria-label="Un ours en peluche qui tient un cœur">
+      <ellipse cx="100" cy="202" rx="55" ry="8" fill="#c76b8c" opacity=".12"/>
+      <g class="leg"><ellipse cx="70" cy="181" rx="25" ry="23"/><ellipse cx="130" cy="181" rx="25" ry="23"/></g>
+      <ellipse class="body" cx="100" cy="143" rx="49" ry="54"/>
+      <ellipse class="muzzle" cx="100" cy="154" rx="27" ry="32"/>
+      <g class="arm arm-left"><ellipse cx="58" cy="127" rx="17" ry="31" transform="rotate(28 58 127)"/></g>
+      <g class="arm arm-right"><ellipse cx="142" cy="127" rx="17" ry="31" transform="rotate(-28 142 127)"/></g>
+      <circle class="ear" cx="62" cy="43" r="24"/><circle class="inner" cx="62" cy="43" r="13"/>
+      <circle class="ear" cx="138" cy="43" r="24"/><circle class="inner" cx="138" cy="43" r="13"/>
+      <ellipse class="head" cx="100" cy="75" rx="51" ry="48"/>
+      <ellipse class="muzzle" cx="100" cy="91" rx="27" ry="20"/>
+      <ellipse cx="100" cy="84" rx="7" ry="5" fill="#50343a"/>
+      <g class="eye-left"><circle class="eye" cx="81" cy="72" r="4.5"/><circle class="shine" cx="82.5" cy="70.5" r="1.5"/></g>
+      <g class="eye-right"><circle class="eye" cx="119" cy="72" r="4.5"/><circle class="shine" cx="120.5" cy="70.5" r="1.5"/></g>
+      <ellipse class="blush" cx="68" cy="89" rx="9" ry="5"/><ellipse class="blush" cx="132" cy="89" rx="9" ry="5"/>
+      <path class="mouth happy-mouth" d="M91 96 Q100 106 109 96"/>
+      <path class="mouth sad-mouth" d="M91 103 Q100 93 109 103" opacity="0"/>
+      <path class="brow" d="M73 62 l12 3 M115 65 l12 -3"/>
+      <path class="tear" d="M77 80 C69 92 71 99 77 99 C83 99 84 91 77 80Z"/>
+      <path class="tear" d="M123 80 C115 92 117 99 123 99 C129 99 130 91 123 80Z"/>
+      <path class="heart-held" d="M100 133 C91 123 73 113 78 103 C83 92 96 98 100 106 C105 96 119 93 124 103 C130 114 109 128 100 133Z"/>
+      <path class="heart-glint" d="M84 104 Q87 100 91 104" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="buttons" id="buttonArea">
+    <button class="btn" id="yes">Oui 💖</button>
+    <button class="btn" id="no" aria-label="Non">Non 🙈</button>
+  </div>
+  <p class="hint" id="hint">Choisis avec ton cœur 💞</p>
+</main>
+
+<section class="result" id="result" aria-live="polite">
+  <div class="result-content">
+    <svg class="party-bear" viewBox="0 0 200 220" role="img" aria-label="Ours fou de joie qui saute">
+      <ellipse cx="100" cy="202" rx="55" ry="8" fill="#c76b8c" opacity=".12"/>
+      <g fill="#c98b69" stroke="#8f5c52" stroke-width="3"><ellipse cx="70" cy="181" rx="25" ry="23"/><ellipse cx="130" cy="181" rx="25" ry="23"/><ellipse cx="100" cy="143" rx="49" ry="54"/><ellipse cx="58" cy="114" rx="17" ry="29" transform="rotate(-38 58 114)"/><ellipse cx="142" cy="114" rx="17" ry="29" transform="rotate(38 142 114)"/><circle cx="62" cy="43" r="24"/><circle cx="138" cy="43" r="24"/><ellipse cx="100" cy="75" rx="51" ry="48"/></g>
+      <g fill="#e7b4a3"><circle cx="62" cy="43" r="13"/><circle cx="138" cy="43" r="13"/></g>
+      <ellipse cx="100" cy="91" rx="27" ry="20" fill="#f4d0b4" stroke="#8f5c52" stroke-width="3"/>
+      <ellipse cx="100" cy="84" rx="7" ry="5" fill="#50343a"/>
+      <circle cx="81" cy="72" r="4.5" fill="#50343a"/><circle cx="119" cy="72" r="4.5" fill="#50343a"/>
+      <circle cx="82.5" cy="70.5" r="1.5" fill="#fff"/><circle cx="120.5" cy="70.5" r="1.5" fill="#fff"/>
+      <ellipse cx="68" cy="89" rx="9" ry="5" fill="#e9828f"/><ellipse cx="132" cy="89" rx="9" ry="5" fill="#e9828f"/>
+      <path d="M87 94 Q100 116 113 94" fill="#fff" stroke="#70424a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M100 133 C91 123 73 113 78 103 C83 92 96 98 100 106 C105 96 119 93 124 103 C130 114 109 128 100 133Z" fill="#ff4f89" stroke="#d92e6a" stroke-width="2"/>
+      <path d="M84 104 Q87 100 91 104" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <h2>YEEEEEEY!!!</h2>
+    <p class="message">TU M’AS RENDU LE PLUS HEUREUX DU MONDE ! 💗</p>
+    <p style="color:#a45d79;margin:0">Attrape tous mes petits cœurs ! 💕</p>
+    <button class="btn replay" id="replay">Encore un peu de magie ✨</button>
+  </div>
+</section>
+<script>
+  const stage=document.getElementById('bearStage');
+  const no=document.getElementById('no'), yes=document.getElementById('yes');
+  const area=document.getElementById('buttonArea'), card=document.getElementById('card');
+  const result=document.getElementById('result'), hint=document.getElementById('hint');
+  const ambient=document.getElementById('ambient');
+  let dodges=0, launchedTimer=null;
+
+  // Background hearts float continuously.
+  for(let i=0;i<22;i++){
+    const el=document.createElement('span');el.className='floaty';
+    el.textContent=['💗','💕','♡','✨','💖'][i%5];
+    el.style.left=Math.random()*100+'%';el.style.fontSize=(14+Math.random()*20)+'px';
+    el.style.animationDuration=(8+Math.random()*10)+'s';el.style.animationDelay=(-Math.random()*16)+'s';
+    ambient.appendChild(el);
+  }
+  function mood(next){
+    stage.classList.remove('cry','joy');
+    if(next) stage.classList.add(next);
+  }
+  function moveNo(){
+    mood('cry');
+    const rect=area.getBoundingClientRect(), b=no.getBoundingClientRect();
+    // Use the whole button area, with randomized spots. It flees on approach, not on click.
+    const maxX=Math.max(0,rect.width-b.width-4);
+    const options=[
+      {x:3,y:-5},{x:maxX,y:-5},
+      {x:Math.max(0,rect.width*.04),y:34},
+      {x:Math.max(0,rect.width-b.width-3),y:34},
+      {x:maxX*.45,y:-28},{x:maxX*.7,y:39}
+    ];
+    let spot=options[Math.floor(Math.random()*options.length)];
+    no.classList.add('running');
+    no.style.left=Math.max(0,Math.min(maxX,spot.x))+'px';
+    no.style.top=spot.y+'px';
+    dodges++;
+    hint.textContent=['Nooon, je vais pleurer… 🥺💧','Hic… ne choisis pas Non… 😭','Mon petit cœur se brise 💔','Tu ne peux pas m’attraper 🙈'][dodges%4];
+  }
+  function joyMood(){
+    mood('joy');hint.textContent='OUIIIII ! Il est trop heureux ! 💗';
+  }
+  // On approach of No, the bear starts crying and the button escapes.
+  no.addEventListener('pointerenter',moveNo);
+  no.addEventListener('pointerdown',e=>{e.preventDefault();moveNo()});
+  no.addEventListener('focus',moveNo);
+  no.addEventListener('click',e=>{e.preventDefault();moveNo()});
+  no.addEventListener('touchstart',e=>{e.preventDefault();moveNo()},{passive:false});
+  yes.addEventListener('pointerenter',joyMood);
+  yes.addEventListener('focus',joyMood);
+  yes.addEventListener('pointerleave',()=>{if(!result.classList.contains('show'))mood('')});
+
+  function launchHearts(){
+    const symbols=['💗','💖','💕','💘','❤️','💝','✨','🌸'];
+    for(let i=0;i<95;i++){
+      const h=document.createElement('span');h.className='launched-heart';
+      h.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+      const angle=Math.random()*Math.PI*2, distance=120+Math.random()*Math.max(innerWidth,innerHeight)*.55;
+      h.style.setProperty('--dx',Math.cos(angle)*distance+'px');
+      h.style.setProperty('--dy',(Math.sin(angle)*distance-100)+'px');
+      h.style.setProperty('--dur',(1.7+Math.random()*2.4)+'s');
+      h.style.setProperty('--scale',(0.65+Math.random()*1.5));
+      h.style.setProperty('--rot',(-90+Math.random()*180)+'deg');
+      h.style.left=(30+Math.random()*40)+'%';h.style.top=(30+Math.random()*35)+'%';
+      h.style.animationDelay=(Math.random()*.9)+'s';result.appendChild(h);
+      setTimeout(()=>h.remove(),5200);
+    }
+  }
+  function petals(){
+    for(let i=0;i<42;i++){
+      const p=document.createElement('span');p.className='petal';p.textContent=['💗','🌸','✨','💕'][Math.floor(Math.random()*4)];
+      p.style.left=Math.random()*100+'%';p.style.fontSize=(15+Math.random()*26)+'px';
+      p.style.setProperty('--fall',(3+Math.random()*4)+'s');p.style.animationDelay=(Math.random()*2)+'s';
+      result.appendChild(p);setTimeout(()=>p.remove(),7500);
+    }
+  }
+  yes.addEventListener('click',()=>{
+    joyMood();
+    card.style.transition='transform .55s ease,opacity .45s ease';
+    card.style.transform='scale(.82) translateY(18px)';card.style.opacity='0';
+    setTimeout(()=>{
+      card.style.display='none';result.classList.add('show');
+      launchHearts();petals();
+      launchedTimer=setInterval(()=>{if(result.classList.contains('show'))launchHearts()},2400);
+    },420);
+  });
+  document.getElementById('replay').addEventListener('click',()=>{
+    result.classList.remove('show');result.querySelectorAll('.launched-heart,.petal').forEach(e=>e.remove());
+    if(launchedTimer)clearInterval(launchedTimer);
+    card.style.display='';card.style.opacity='1';card.style.transform='';
+    card.style.transition='';no.style.left='calc(50% + 28px)';no.style.top='8px';
+    dodges=0;mood('');no.classList.remove('running');no.style.left='';no.style.top='';hint.textContent='Choisis avec ton cœur 💞';
+  });
+</script>
+</body>
+</html>
